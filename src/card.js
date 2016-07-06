@@ -3,27 +3,30 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 
 export default class Card extends React.Component {
 	constructor (props) {
-		super(props);
-		this.handlePress = this.handlePress.bind(this);
+		super();
+		this.handlePressIn = this.handlePressIn.bind(this);
+		this.handlePressOut = this.handlePressOut.bind(this);
 	}
 
-	handlePress () {
-		this.props.onPress(this.props.cardId, this.props.cardClicked);
+	handlePressIn () {
+		this.props.onPressIn(this.props.cardId);
+	}
+
+	handlePressOut () {
+		this.props.onPressOut(this.props.cardId);
 	}
 
 	render () {
-		const {cardId, cardSelected, topOffset, width} = this.props;
-		const transform = [{ translateY: topOffset }];
 		const cardStyles = {
 			backgroundColor: this.props.background,
-			transform,
-			width,
 			height: this.props.height,
 		};
 		return (
 			<TouchableOpacity
+				activeOpacity={1}
 				style={[styles.container, cardStyles]}
-				onPress={this.handlePress}>
+				onPressIn={this.handlePressIn}
+				onPressOut={this.handlePressOut}>
 				{this.props.children}
 			</TouchableOpacity>
 		);
@@ -32,10 +35,9 @@ export default class Card extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		borderWidth: 2,
-		borderColor: 'green',
 		position: 'absolute',
-		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
 	}
 });

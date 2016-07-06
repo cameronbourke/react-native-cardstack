@@ -8,15 +8,17 @@ import {
 	Dimensions,
   View,
 } from 'react-native';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
-import { CardStack, Card } from './react-native-cp-update-button';
+import { CardStack, Card } from './react-native-cardstack';
 import people from './people';
 
-const { height, width } = Dimensions.get('window');
+// Can use the Dimensions API to query for the width and height
+const { width } = Dimensions.get('window');
 
 const ProfilePicture = ({ imgSrc, borderColor }) => (
 	<Image
-		style={[styles.img, { borderWidth: 3, borderColor: borderColor }]}
+		style={[styles.img, { borderColor: borderColor }]}
 		source={{ uri: imgSrc }}
 	/>
 );
@@ -24,15 +26,18 @@ const ProfilePicture = ({ imgSrc, borderColor }) => (
 const DetailsRow = ({ icon, title, summary }) => {
 	return (
 		<View style={styles.detailsRow}>
-			{/*<span
-			className={`icon ${icon}`}
-			style={{ ...styles.detailsRow.icon, alignSelf: 'flex-start' }}
-			/>*/}
+			<View style={styles.detailsIcon}>
+				<Ionicon
+					name={icon}
+					size={27}
+					color='#fff'
+				/>
+   		</View>
 			<View>
 				<Text style={styles.detailsTitle}>
 					{title}
 				</Text>
-				<Text style={{ fontWeight: '300', lineHeight: 1.45 }}>
+				<Text style={styles.detailsSummary}>
 					{summary}
 				</Text>
 			</View>
@@ -40,31 +45,42 @@ const DetailsRow = ({ icon, title, summary }) => {
 	);
 };
 
-// className='card-header-details'
-// className='icon ion-ios-arrow-down'
 const TeamMemberCard = (props) => (
-	<View style={{ position: 'absolute', top: 0 }}>
+	<View>
 		<View style={styles.cardHeader}>
-			<ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
 			<View>
+				<ProfilePicture
+					imgSrc={props.imgSrc}
+					borderColor={props.imgBorderColor}
+				/>
+			</View>
+			<View style={{ alignItems: 'flex-end' }}>
 				<Text style={styles.headerName}>{props.name}</Text>
-				<Text style={styles.headerTitle}>{props.title}</Text>
+				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+					<Ionicon
+						name='ios-arrow-down-outline'
+						style={{ marginRight: 10, paddingTop: 5 }}
+						size={20}
+						color='rgba(255, 255, 255, 0.7)'
+					/>
+					<Text style={styles.headerTitle}>{props.title}</Text>
+    		</View>
 			</View>
 		</View>
 
 		<View>
 			<DetailsRow
-				icon='ion-ios-telephone-outline'
+				icon='ios-call-outline'
 				title={props.mobileNo}
 			/>
 
 			<DetailsRow
-				icon='ion-ios-location-outline'
+				icon='ios-pin-outline'
 				title={props.location}
 			/>
 
 			<DetailsRow
-				icon='icon ion-ios-paper-outline'
+				icon='ios-paper-outline'
 				title='Main Role'
 				summary={props.role}
 			/>
@@ -74,11 +90,15 @@ const TeamMemberCard = (props) => (
 
 const CardStackDemo = (props) => (
 	<View style={styles.container}>
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+  		<Text style={styles.exampleTitle}>{'<CardStack /> Example'}</Text>
+		</View>
 		<CardStack
-			height={height}
+			height={400}
 			width={width}
-			background="#f8f8f8"
-			hoverOffset={25}>
+			transitionDuration={300}
+			backgroundColor='#f8f8f8'
+			hoverOffset={60}>
 
 			{people.map((person, i) =>
 				<Card
@@ -94,12 +114,17 @@ const CardStackDemo = (props) => (
 
 const styles = StyleSheet.create({
 	container: {
+		paddingTop: 40,
 		flex: 1,
-		borderWidth: 2,
-		borderColor: 'red',
+		justifyContent: 'space-between',
+	},
+	exampleTitle: {
+		fontSize: 28,
+		fontFamily: 'Futura-Medium'
 	},
 	cardHeader: {
-		height: 125,
+		flexDirection: 'row',
+		height: 100,
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		paddingTop: 10,
@@ -110,44 +135,50 @@ const styles = StyleSheet.create({
 	headerName: {
 		margin: 0,
 		fontWeight: '500',
-		fontSize: 25,
+		fontSize: 23,
+		color: '#fff',
 		textAlign: 'right'
 	},
 	headerTitle: {
 		marginTop: 4,
 		fontWeight: '300',
-		fontSize: 17,
+		fontSize: 16,
+		color: '#fff',
 		opacity: 0.8,
-		textAlign: 'right',
 	},
 	img: {
 		width: 60,
 		height: 60,
-		borderRadius: 60,
+		borderRadius: 60	/2,
+		borderWidth: 3,
 	},
 	detailsRow: {
-		flex: 1,
+		flexDirection: 'row',
 		paddingLeft: 20,
 		paddingRight: 20,
-		alignItems: 'center',
-		marginTop: 25,
-		marginBottom: 25,
+		marginBottom: 20,
 	},
 	detailsIcon: {
-		flex: 1,
+		alignItems: 'center',
 		width: 25,
-		height: 30,
+		height: 35,
 		marginRight: 20,
+		alignSelf: 'flex-start',
 		borderBottomWidth: 1,
 		borderColor: 'rgba(255, 255, 255, 0.8)',
-		textAlign: 'center',
-		fontSize: 22,
 	},
 	detailsTitle: {
 		fontWeight: '500',
-		fontSize: 20,
+		fontSize: 19,
+		color: '#fff',
 		margin: 0,
 		fontStyle: 'italic',
+	},
+	detailsSummary: {
+		fontWeight: '300',
+		color: '#fff',
+		lineHeight: 22,
+		width: 300,
 	},
 });
 

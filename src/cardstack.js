@@ -1,63 +1,84 @@
 import React from 'react';
 import { View, LayoutAnimation, StyleSheet } from 'react-native';
+import calcHeight from './lib/calcHeight';
+
+const { Types, Properties } = LayoutAnimation;
 
 const ERROR_MESSAGE = 'CardStack component must have at least two child Card components. Please check the children of this CardStack instance.';
+const LONG_PRESS_THROTTLE = 400;
 
 export default class CardStack extends React.Component {
 	constructor (props) {
 		super();
 		const childrenLength = props.children && props.children.length || 1;
-		const headerHeight = props.height / childrenLength;
-
 		if (childrenLength <= 1) throw new Error(ERROR_MESSAGE);
 
-		this._initialTopOffsets = props.children.map((child, i) => {
-			return i === 0 ? 0 : headerHeight * i
-		});
+		this.handlePressIn = this.handlePressIn.bind(this);
+		this.handlePressOut = this.handlePressOut.bind(this);
 
 		this.state = {
-			topOffsets: this._initialTopOffsets,
-			cardSelected: false,
+			selectedCardIndex: null,
+			hoveredCardIndex: null,
 		};
 
-		this.handleCardPress = this.handleCardPress.bind(this);
+		this._PRESET = LayoutAnimation.create(
+		  props.transitionDuration, Types.easeInEaseOut, Properties.opacity
+		);
 	}
 
-	handleCardPress (id, cb) {
-		const initialState = {
-			topOffsets: [],
-			cardSelected: true,
-		};
+	componentWillReceiveProps ({ transitionDuration }) {
+		if (this.props.transitionDuration !== transitionDuration) {
+			this._PRESET = LayoutAnimation.create(
+				transitionDuration, Types.easeInEaseOut, Properties.opacity
+			);
+		}
+	}
 
-		const nextState = (prev, offset, index) => {
-			const {cardSelected} = this.state;
-			const newOffset = (index === id) ? 0 : this.props.height;
-			return {
-				cardSelected: cardSelected ? false : true,
-				topOffsets: [
-					...prev.topOffsets,
-					cardSelected ? this._initialTopOffsets[index] : newOffset,
-				],
-			};
-		};
+	handleCardPress (cardId) {
+		LayoutAnimation.configureNext(this._PRESET);
+		const index = (this.state.selectedCardIndex === cardId) ? null : cardId;
+		this.setState({ selectedCardIndex: index });
+	}
 
-		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-		this.setState(this.state.topOffsets.reduce(nextState, initialState));
+	handleCardLongPress (cardId) {
+		LayoutAnimation.configureNext(this._PRESET);
+		this.setState({ hoveredCardIndex: null });
+	}
 
-		if (cb) cb(this.state.cardSelected, id);
+	handlePressIn (cardId, cardSelected) {
+		if (this.state.selectedCardIndex) return this.handleCardPress(cardId);
+		LayoutAnimation.configureNext(this._PRESET);
+		this.setState({ hoveredCardIndex: cardId });
+		this._cardPressed = setTimeout(() =>
+			this._cardPressed = clearTimeout(this._cardPressed),
+			LONG_PRESS_THROTTLE
+		);
+	}
+
+	handlePressOut (cardId) {
+		if (this._cardPressed) this.handleCardPress(cardId);
+		else this.handleCardLongPress(cardId);
 	}
 
 	renderCards () {
-		const cloneCard = (child, i) => {
+		const cloneCard = (child, cardIndex, children) => {
+			const indexs = {
+				selectedIndex: this.state.selectedCardIndex,
+				hoveredIndex: this.state.hoveredCardIndex,
+				cardIndex,
+			};
+			const height = calcHeight(
+				indexs,
+				this.props.height,
+				this.props.hoverOffset,
+				children.length
+			);
 			return React.cloneElement(child, {
-				key: i,
-				cardId: i,
-				hoverOffset: this.props.hoverOffset,
-				cardSelected: this.state.cardSelected,
-				height: this.props.height,
-				topOffset: this.state.topOffsets[i],
-				width: this.props.width,
-				onPress: this.handleCardPress,
+				key: cardIndex,
+				cardId: cardIndex,
+				height,
+				onPressIn: this.handlePressIn,
+				onPressOut: this.handlePressOut,
 			});
 		};
 		return this.props.children.map(cloneCard);
@@ -65,39 +86,31 @@ export default class CardStack extends React.Component {
 
 	render () {
 		const stackStyles = {
-			backgroundColor: this.props.background,
+			overflow: 'hidden',
+			backgroundColor: this.props.backgroundColor,
 			height: this.props.height,
 			width: this.props.width,
-			borderWidth: 2,
-			borderColor: 'orange',
 		};
 		return (
-			<View style={[styles.container, stackStyles]}>
+			<View removeClippedSubviews style={[this.props.style, stackStyles]}>
 				{this.renderCards()}
 			</View>
 		);
 	}
 };
 
-const styles = StyleSheet.create({
-	container: {
-		position: 'relative',
-		overflow: 'hidden',
-		padding: 0,
-		margin: 0,
-	},
-});
-
 CardStack.propTypes = {
-	backgroundColor: React.PropTypes.string,
 	height: React.PropTypes.number,
-	hoverOffset: React.PropTypes.number,
 	width: React.PropTypes.number,
+	backgroundColor: React.PropTypes.string,
+	hoverOffset: React.PropTypes.number,
+	transitionDuration: React.PropTypes.number,
 };
 
 CardStack.defaultProps = {
-	width: 350,
 	height: 600,
-	bgColor: 'f8f8f8',
+	width: 350,
+	backgroundColor: 'f8f8f8',
 	hoverOffset: 30,
+	transitionDuration: 300,
 };

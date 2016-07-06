@@ -7,9 +7,10 @@
   },
   "dependencies": {
     "react": "15.1.0",
-    "react-native": "0.28.0"
+    "react-native": "0.28.0",
+    "react-native-vector-icons": "2.0.3"
   },
-	"devDependencies": {
-		"babel-preset-react-native-stage-0": "1.0.1"
-	}
+  "devDependencies": {
+    "babel-preset-react-native-stage-0": "1.0.1"
+  }
 }
