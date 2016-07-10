@@ -1,6 +1,6 @@
 {
   "name": "react-native-cardstack",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "react native component inspired by the iOS passbook app UI",
   "main": "dist/index.js",
   "keywords": [
@@ -39,7 +39,7 @@
     "compile:dist": "babel src --out-dir dist",
     "compile:dev": "babel src -w --out-dir CardStackDemo/react-native-cardstack",
     "prepublish": "npm test && npm run compile:dist",
-		"release": "npm version 1.0.0 && git push && git push --tags && npm publish",
+    "release": "npm version 1.0.0 && git push && git push --tags && npm publish",
     "test": "ava",
     "test:watch": "ava --watch",
     "test:coverage": "nyc ava"
