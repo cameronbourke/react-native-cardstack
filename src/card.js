@@ -18,13 +18,14 @@ export default class Card extends React.Component {
 
 	render () {
 		const cardStyles = {
-			backgroundColor: this.props.background,
+			backgroundColor: this.props.backgroundColor,
 			height: this.props.height,
 		};
 		return (
 			<TouchableOpacity
+				{...this.props}
 				activeOpacity={1}
-				style={[styles.container, cardStyles]}
+				style={[styles.container, this.props.style, cardStyles]}
 				onPressIn={this.handlePressIn}
 				onPressOut={this.handlePressOut}>
 				{this.props.children}

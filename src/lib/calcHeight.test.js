@@ -46,15 +46,3 @@ test('it calculates the height when hoveredIndex === cardIndex', (assert) => {
 	const actual = calcHeight(indexs, height, hoverOffset, 3);
   assert.is(actual, (height / 3) + hoverOffset);
 });
-
-test('it returns 0 when there is no value for each index', (assert) => {
-	const height = 400;
-	const hoverOffset = 30;
-	const indexs = {
-		selectedIndex: null,
-		hoveredIndex: null,
-		cardIndex: null,
-	};
-	const actual = calcHeight(indexs, height, hoverOffset, 3);
-  assert.is(actual, 0);
-});

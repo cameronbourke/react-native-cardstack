@@ -69,12 +69,14 @@ var CardStack = function (_React$Component) {
 			_reactNative.LayoutAnimation.configureNext(this._PRESET);
 			var index = this.state.selectedCardIndex === cardId ? null : cardId;
 			this.setState({ selectedCardIndex: index });
+			if (this.props.onPress) this.props.onPress();
 		}
 	}, {
 		key: 'handleCardLongPress',
 		value: function handleCardLongPress(cardId) {
 			_reactNative.LayoutAnimation.configureNext(this._PRESET);
 			this.setState({ hoveredCardIndex: null });
+			if (this.props.onLongPress) this.props.onLongPress();
 		}
 	}, {
 		key: 'handlePressIn',
@@ -126,7 +128,9 @@ var CardStack = function (_React$Component) {
 			};
 			return _react2.default.createElement(
 				_reactNative.View,
-				{ removeClippedSubviews: true, style: [this.props.style, stackStyles] },
+				{
+					removeClippedSubviews: true,
+					style: [this.props.style, stackStyles] },
 				this.renderCards()
 			);
 		}

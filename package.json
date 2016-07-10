@@ -36,9 +36,10 @@
   "scripts": {
     "start": "npm run compile:dev",
     "start:ios": "node CardStackDemo/node_modules/react-native/local-cli/cli.js start",
-    "compile:production": "babel src --out-dir dist",
+    "compile:dist": "babel src --out-dir dist",
     "compile:dev": "babel src -w --out-dir CardStackDemo/react-native-cardstack",
-    "prepublish": "npm run compile:production",
+    "prepublish": "npm test && npm run compile:dist",
+		"release": "npm version 1.0.0 && git push && git push --tags && npm publish",
     "test": "ava",
     "test:watch": "ava --watch",
     "test:coverage": "nyc ava"

@@ -38,11 +38,13 @@ export default class CardStack extends React.Component {
 		LayoutAnimation.configureNext(this._PRESET);
 		const index = (this.state.selectedCardIndex === cardId) ? null : cardId;
 		this.setState({ selectedCardIndex: index });
+		if (this.props.onPress) this.props.onPress();
 	}
 
 	handleCardLongPress (cardId) {
 		LayoutAnimation.configureNext(this._PRESET);
 		this.setState({ hoveredCardIndex: null });
+		if (this.props.onLongPress) this.props.onLongPress();
 	}
 
 	handlePressIn (cardId, cardSelected) {
@@ -92,7 +94,9 @@ export default class CardStack extends React.Component {
 			width: this.props.width,
 		};
 		return (
-			<View removeClippedSubviews style={[this.props.style, stackStyles]}>
+			<View
+				removeClippedSubviews
+				style={[this.props.style, stackStyles]}>
 				{this.renderCards()}
 			</View>
 		);

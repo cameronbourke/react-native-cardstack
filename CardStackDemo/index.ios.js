@@ -103,7 +103,9 @@ const CardStackDemo = (props) => (
 			{people.map((person, i) =>
 				<Card
 					key={i}
-					background={person.background}>
+					onPress={() => console.log('onPress called')}
+					onLongPress={() => console.log('long press called')}
+					backgroundColor={person.background}>
 					<TeamMemberCard {...person} />
 				</Card>
 			)}

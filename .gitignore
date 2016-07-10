@@ -2,3 +2,4 @@ node_modules/
 *.log
 dist/
 example/UpdateButtonDemo/dev
+.nyc_output/
