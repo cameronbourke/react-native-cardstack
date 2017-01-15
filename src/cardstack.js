@@ -95,7 +95,6 @@ export default class CardStack extends React.Component {
 		};
 		return (
 			<View
-				removeClippedSubviews
 				style={[this.props.style, stackStyles]}>
 				{this.renderCards()}
 			</View>

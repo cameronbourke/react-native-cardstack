@@ -24,8 +24,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Types = _reactNative.LayoutAnimation.Types;
-var Properties = _reactNative.LayoutAnimation.Properties;
+var Types = _reactNative.LayoutAnimation.Types,
+    Properties = _reactNative.LayoutAnimation.Properties;
 
 
 var ERROR_MESSAGE = 'CardStack component must have at least two child Card components. Please check the children of this CardStack instance.';
@@ -37,7 +37,7 @@ var CardStack = function (_React$Component) {
 	function CardStack(props) {
 		_classCallCheck(this, CardStack);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CardStack).call(this));
+		var _this = _possibleConstructorReturn(this, (CardStack.__proto__ || Object.getPrototypeOf(CardStack)).call(this));
 
 		var childrenLength = props.children && props.children.length || 1;
 		if (childrenLength <= 1) throw new Error(ERROR_MESSAGE);
@@ -129,7 +129,6 @@ var CardStack = function (_React$Component) {
 			return _react2.default.createElement(
 				_reactNative.View,
 				{
-					removeClippedSubviews: true,
 					style: [this.props.style, stackStyles] },
 				this.renderCards()
 			);

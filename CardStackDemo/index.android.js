@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-class CardStackDemo extends Component {
+export default class CardStackDemo extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -23,6 +23,7 @@ class CardStackDemo extends Component {
           To get started, edit index.android.js
         </Text>
         <Text style={styles.instructions}>
+          Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
         </Text>
       </View>

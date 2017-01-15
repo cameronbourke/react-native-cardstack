@@ -3,11 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-
-exports.default = function (indexs, staticHeight, hoverOffset, cardsLength) {
-	var selectedIndex = indexs.selectedIndex;
-	var hoveredIndex = indexs.hoveredIndex;
-	var cardIndex = indexs.cardIndex;
+var calcHeight = function calcHeight(indexs, staticHeight, hoverOffset, cardsLength) {
+	var selectedIndex = indexs.selectedIndex,
+	    hoveredIndex = indexs.hoveredIndex,
+	    cardIndex = indexs.cardIndex;
 
 	if (!selectedIndex && selectedIndex !== 0) {
 		if (cardIndex < 0) return 0;
@@ -16,3 +15,5 @@ exports.default = function (indexs, staticHeight, hoverOffset, cardsLength) {
 	}
 	return selectedIndex === cardIndex ? staticHeight : 0;
 };
+
+exports.default = calcHeight;

@@ -1,4 +1,4 @@
-import CardStack from './cardstack';
-import Card from './card';
+import CardStack from './Cardstack';
+import Card from './Card';
 
 export { Card, CardStack };

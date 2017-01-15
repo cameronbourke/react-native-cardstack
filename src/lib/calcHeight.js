@@ -1,4 +1,4 @@
-export default (indexs, staticHeight, hoverOffset, cardsLength) => {
+const calcHeight = (indexs, staticHeight, hoverOffset, cardsLength) => {
 	const { selectedIndex, hoveredIndex, cardIndex } = indexs;
 	if (!selectedIndex && selectedIndex !== 0) {
 		if (cardIndex < 0) return 0;
@@ -9,3 +9,6 @@ export default (indexs, staticHeight, hoverOffset, cardsLength) => {
 	}
 	return (selectedIndex === cardIndex) ? staticHeight : 0;
 };
+
+
+export default calcHeight;

@@ -28,7 +28,7 @@ var Card = function (_React$Component) {
 	function Card(props) {
 		_classCallCheck(this, Card);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Card).call(this));
+		var _this = _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).call(this));
 
 		_this.handlePressIn = _this.handlePressIn.bind(_this);
 		_this.handlePressOut = _this.handlePressOut.bind(_this);

@@ -1,6 +1,6 @@
 {
   "name": "react-native-cardstack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react native component inspired by the iOS passbook app UI",
   "main": "dist/index.js",
   "keywords": [
@@ -14,18 +14,6 @@
     "manual-update",
     "ui"
   ],
-  "ava": {
-    "babel": "inherit",
-    "files": [
-      "src/**/*.test.js"
-    ],
-    "require": [
-      "babel-register",
-      "babel-polyfill",
-      "react-native-mock/mock",
-      "./__tests__/setup.js"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cameronbourke/react-native-cardstack.git"
@@ -38,34 +26,33 @@
     "start:ios": "node CardStackDemo/node_modules/react-native/local-cli/cli.js start",
     "compile:dist": "babel src --out-dir dist",
     "compile:dev": "babel src -w --out-dir CardStackDemo/react-native-cardstack",
-    "prepublish": "npm test && npm run compile:dist",
     "release": "npm version 1.0.0 && git push && git push --tags && npm publish",
-    "test": "ava",
-    "test:watch": "ava --watch",
-    "test:coverage": "nyc ava"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "files": [
     "dist"
   ],
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/CardStackDemo/react-native-cardstack"
+    ],
+    "testRegex": "(src/.*(test|spec))\\.jsx?$"
+  },
   "author": "Cameron Bourke <cameron2295@gmail.com> (http://cameronbourke.com/)",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=15.0.0",
-    "react-native": ">=0.27.0"
+    "react": ">=15.0.0"
   },
   "devDependencies": {
-    "ava": "0.15.2",
-    "babel-cli": "6.10.1",
-    "babel-preset-es2015": "6.9.0",
-    "babel-preset-react": "6.5.0",
-    "enzyme": "2.3.0",
-    "mockery": "1.7.0",
-    "nyc": "6.6.1",
-    "react": "15.2.0",
-    "react-addons-test-utils": "15.2.0",
-    "react-dom": "15.2.0",
-    "react-native": "0.28.0",
-    "react-native-mock": "0.2.4"
+    "babel-cli": "6.18.0",
+    "babel-preset-es2015": "6.18.0",
+    "babel-preset-react": "6.16.0",
+    "react": "15.4.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-jest": "^18.0.0"
+  }
 }
