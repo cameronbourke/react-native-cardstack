@@ -40,7 +40,7 @@ import { CardStack, Card } from 'react-cardstack';
 	hoverOffset={25}>
 
 	<Card backgroundColor='#2980B9'>
-		<h1>Number 1</h1>
+		<NumberOne />
 	</Card>
 
 	<Card backgroundColor='#27AE60'>
